@@ -36,10 +36,10 @@ const putdirector = async (req, res)=>{
         id
     ]
 
-    const sql = `update directores
-                set
-                nombre_director = $1, 
-                where id = $2 returning *`
+    const sql = `update directores 
+                    set
+                     nombre_director = $1 
+                  where id = $2 returning *`
 
     const result = await db.query(sql, params)
 
