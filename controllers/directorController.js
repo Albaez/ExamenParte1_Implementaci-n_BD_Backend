@@ -18,7 +18,7 @@ const postdirector = async (req, res)=>{
     const sql = `insert into directores
                 (nombre_director)
                 values 
-                ($1, $2) returning * `
+                ($1) returning * `
 
     const result = await db.query(sql , params);
 
@@ -37,8 +37,8 @@ const putdirector = async (req, res)=>{
     ]
 
     const sql = `update directores
-                  set
-                    nombre_director = $1, 
+                set
+                nombre_director = $1, 
                 where id = $2 returning *`
 
     const result = await db.query(sql, params)
