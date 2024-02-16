@@ -2,7 +2,7 @@ import { db } from '../db/conn.js';
 
 const getpelicula = async (req,res)=>{
 
-    const sql = `select * from tbl_pelicula order by pelicula_id`;
+    const sql = `select * from tbl_pelicula order by id`;
     const result = await db.query(sql);
     res.json(result)
 

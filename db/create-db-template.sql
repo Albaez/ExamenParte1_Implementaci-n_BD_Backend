@@ -65,3 +65,12 @@ CREATE TABLE PeliculasDocumental (
     creacion TIMESTAMP DEFAULT current_timestamp
 );
 
+--relaciones--
+SELECT
+    p.id AS pelicula_id,
+    p.pelicula_nombre,
+    d.nombre_director
+FROM
+    tbl_pelicula p
+INNER JOIN
+    Directores d ON p.id = d.id;
