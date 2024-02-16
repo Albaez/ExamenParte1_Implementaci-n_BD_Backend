@@ -7,14 +7,15 @@ CREATE TABLE tbl_pelicula(
 );
 
 
-
-
+select * from tbl_pelicula
 
 CREATE TABLE Directores (
     id_director SERIAL NOT NULL PRIMARY KEY,
     nombre_director VARCHAR(255) NOT NULL,
     creacion TIMESTAMP DEFAULT current_timestamp
 );
+
+
 
 
 CREATE TABLE ActricesProtagonistas (
