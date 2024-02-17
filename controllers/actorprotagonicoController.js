@@ -38,7 +38,7 @@ const putActorprotagonico = async (req, res)=>{
 
     const sql = `update actoresprotagonistas
                   set
-                    nombre_actorprotagonista = $1, 
+                    nombre_actorprotagonista = $1 
                 where id = $2 returning *`
 
     const result = await db.query(sql, params)

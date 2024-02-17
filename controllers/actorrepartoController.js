@@ -29,7 +29,7 @@ const putActorreparto = async (req, res) => {
 
   const sql = `update actoresreparto
                     set
-                    nombre_actorreparto = $1, 
+                    nombre_actorreparto = $1 
                 where id = $2 returning *`;
 
   const result = await db.query(sql, params);
@@ -48,9 +48,9 @@ const deleteActorreparto = async (req, res) => {
 };
 
 export {
-    deleteActorreparto,
-    getActorreparto,
-    postActorreparto,
-    putActorreparto
+  deleteActorreparto,
+  getActorreparto,
+  postActorreparto,
+  putActorreparto
 };
 
