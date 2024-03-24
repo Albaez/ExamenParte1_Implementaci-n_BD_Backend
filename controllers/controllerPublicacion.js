@@ -1,6 +1,6 @@
-import { db } from '../db/conn.js';
+import { db } from "../db/conn.js";
 
-const putpelicula = async (req, res)=>{
+const putPublicacion = async (req, res)=>{
 
     try{
 
@@ -22,13 +22,13 @@ const putpelicula = async (req, res)=>{
 
 }
 
-const postpelicula = async (req, res) => {
+const postPublicacion = async (req, res) => {
+
     try {
+
         const {
             caption,
-            nombre_usuario,
-            pelicula_nombre,
-            tipo_pelicula
+            nombre_usuario
         } = req.body;
 
         const {
@@ -37,31 +37,34 @@ const postpelicula = async (req, res) => {
             originalname
         } = req.file;
 
-        const params = [buffer, mimetype, originalname, caption, nombre_usuario, pelicula_nombre, tipo_pelicula];
+        const params = [buffer, mimetype, originalname, caption, nombre_usuario];
 
-        const sql = `INSERT INTO tbl_pelicula 
-                        (imagen, mime_type, nombre_archivo, caption, nombre_usuario, pelicula_nombre, tipo_pelicula)
-                        VALUES 
-                        ($1, $2, $3, $4, $5, $6, $7)
-                      RETURNING id, nombre_usuario, 'Insercion Exitosa' mensaje`;
+        const sql = ` insert into tbl_publicacion 
+                        (imagen, mime_type, nombre_archivo, caption, nombre_usuario  )
+                        values 
+                        ($1, $2, $3, $4, $5)
+                      returning  id, nombre_usuario, 'Insercion Exitosa' mensaje `;
 
-        const result = await db.query(sql, params);
+        const result = await (db.query(sql, params));
 
-        res.json(result);
+
+        res.json(result)
+
     } catch (err) {
         res.status(500).json({ mensaje: err.message });
     }
+
+
+
 }
 
-
-
-const deletepelicula = async (req, res) => {
+const deletePublicacion = async (req, res) => {
     try {
       const params = [req.params.id];
   
-      const sql = `DELETE FROM tbl_pelicula 
+      const sql = `DELETE FROM tbl_publicacion 
                    WHERE id = $1 
-                   RETURNING id, 'Pelicula Eliminada' mensaje`;
+                   RETURNING id, 'Publicación Borrada' mensaje`;
   
       const result = await db.query(sql, params);
   
@@ -71,12 +74,17 @@ const deletepelicula = async (req, res) => {
     }
   }
 
+const getPublicaciones = async (req, res) => {
 
-  const getpelicula = async (req, res) => {
     try {
-        const sql = `SELECT id, caption, pelicula_nombre, tipo_pelicula, nombre_usuario, mime_type, encode(imagen, 'base64') imagen  
-                    FROM tbl_pelicula 
-                    ORDER BY fecha_post DESC`;
+
+        const sql = `select id, 
+                            caption, 
+                            nombre_usuario,
+                            mime_type, 
+                            encode(imagen, 'base64') imagen  
+                    from tbl_publicacion 
+                    order by fecha_post desc`
 
         const result = await db.query(sql);
 
@@ -85,10 +93,19 @@ const deletepelicula = async (req, res) => {
         } else {
             res.status(404).json({ mensaje: "Sin datos que mostrar" });
         }
-    } catch (err) {
-        res.status(500).json({ mensaje: "Error en busqueda de post" });
-    }
-}
- 
 
-export { deletepelicula, getpelicula, postpelicula, putpelicula };
+
+
+    } catch (err) {
+
+        res.status(500).json({ mensaje: "Error en busqueda de post" });
+
+    }
+
+
+}
+
+
+export {
+    deletePublicacion, getPublicaciones, postPublicacion, putPublicacion
+};
