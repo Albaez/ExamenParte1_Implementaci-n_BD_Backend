@@ -18,7 +18,7 @@ const postActorprotagonico = async (req, res)=>{
     const sql = `insert into actoresprotagonistas
                 (nombre_actorprotagonista)
                 values 
-                ($1, $2) returning * `
+                ($1) returning * `
 
     const result = await db.query(sql , params);
 

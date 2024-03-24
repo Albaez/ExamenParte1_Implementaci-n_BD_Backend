@@ -18,7 +18,7 @@ const postActrizprotagonico = async (req, res)=>{
     const sql = `insert into actricesprotagonistas
                 (nombre_actrizprotagonista)
                 values 
-                ($1, $2) returning * `
+                ($1) returning * `
 
     const result = await db.query(sql , params);
 
@@ -26,26 +26,25 @@ const postActrizprotagonico = async (req, res)=>{
     
 }
 
-const putActrizprotagonico = async (req, res)=>{
-
-    const {nombre_actrizprotagonista } = req.body
-    const {id} =req.params
-
-    const params = [
-        nombre_actrizprotagonista, 
-        id
-    ]
-
-    const sql = `update actricesprotagonistas
-                  set
-                    nombre_actrizprotagonista = $1, 
-                where id = $2 returning *`
-
-    const result = await db.query(sql, params)
-
-    res.json(result);
-
-}
+const putActrizprotagonico = async (req, res) => {
+    const { nombre_actrizprotagonista } = req.body;
+    const { id } = req.params;
+  
+    const params = [nombre_actrizprotagonista, id];
+  
+    const sql = `UPDATE actricesprotagonistas
+                  SET 
+                     nombre_actrizprotagonista = $1
+                 WHERE id = $2 RETURNING *`;
+  
+    try {
+      const result = await db.query(sql, params);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Ocurrió un error al actualizar la actriz protagonista' });
+    }
+  };
 
 const deleteActrizprotagonico = async (req, res)=>{
 
